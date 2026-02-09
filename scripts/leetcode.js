@@ -633,10 +633,21 @@ LeetCode.prototype.addManualSubmitButton = function () {
   submitButton.appendChild(getGitIcon());
   submitButton.addEventListener('click', () => loader(this));
 
+  let customisedName = document.createElement('input');
+  customisedName.id = 'customisedName';
+  customisedName.type = 'text';
+  customisedName.value = 'Solution1'; 
+
+  let nameLabel = document.createElement('p');
+  nameLabel.textContent = 'File Name Suffix: ';
+  nameLabel.className = 'text-caption text-text-secondary';
+
   let notesIcon = document.querySelectorAll('.ml-auto svg.fa-bookmark');
   if (checkElem(notesIcon)) {
     const target = notesIcon[0].closest('button.ml-auto').parentElement;
-    target.prepend(submitButton);
+    target.prepend(submitButton); 
+    target.prepend(customisedName);
+    target.prepend(nameLabel);
   }
 };
 
@@ -747,7 +758,7 @@ const loader = (leetCode) => {
       /* Upload code to Git */
       const updateCode = leetCode.findAndUploadCode(
         problemName,
-        problemName + language,
+        problemName + `-${document.getElementById('customisedName').value}` + language,
         probStats,
         'upload',
       );
